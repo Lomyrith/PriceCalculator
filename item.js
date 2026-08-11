@@ -25,6 +25,7 @@ const cart = [];
 
 const itemContainer = document.getElementById("itemsContainer");
 const cartContainer = document.getElementById("sideBarCartList");
+const sumEntry = document.getElementById("sumEntry");
 
 function addToCart(item) {
   console.log(item);
@@ -75,21 +76,29 @@ function deleteFromCart(item) {
   updateCartContainer();
 }
 
+function CalculateSumOfAll() {}
+
 function updateCartContainer() {
   cartContainer.innerHTML = "";
   console.log("cart erased");
 
+  var sum = 0;
+
   cart.forEach(({ item, menge }) => {
+    const positionSum = menge * Number(item.price);
     cartContainer.innerHTML += `
     <div class="cartItem">
-      <span>${menge}x </span>  
-      <span>${item.title}</span>
-      <span>(${item.price} €)</span>
-<span class="positionSum">${(menge * Number(item.price)).toFixed(2).replace(".", ",")} €</span>
-<button class="deleteFromCart" onclick='deleteFromCart(${JSON.stringify(item)})'>X</button>
+      <span class="cartQty">${menge}x </span>  
+      <span class="cartTitle">${item.title} (${item.price} €)</span>
+      <span class="positionSum">${positionSum.toFixed(2).replace(".", ",")} €</span>
+      <button class="deleteFromCart" onclick='deleteFromCart(${JSON.stringify(item)})'>X</button>
+    </div>
 `;
+    // <span class="cartPrice">(${item.price} €)</span>
+    sum = sum + positionSum;
   });
 
+  sumEntry.innerText = sum.toFixed(2).replace(".", ",") + " €";
   console.log("card updated");
 }
 
