@@ -47,3 +47,22 @@ body {
   font-size: clamp(0.75rem, 1vw, 0.95rem);
   line-height: 1.2;
 }
+
+#sideBarCartList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cartItem {
+  font-size: 16px;
+  color: black;
+  display: fetch;
+  flex-direction: row;
+  border-bottom: 1px dashed darkgray;
+  padding: 0 1 2 0;
+}
+
+.positionSum {
+  font-weight: bold;
+}
