@@ -1,3 +1,7 @@
+const cart = [];
+var minimumOrder = 20;
+var sumValue = 0;
+
 const items = [
   { id: 1, title: "Sake Nigiri (Lachs)", price: "4.50" },
   { id: 2, title: "Maguro Nigiri (Thunfisch)", price: "5.00" },
@@ -35,11 +39,10 @@ const items = [
   { id: 34, title: "Mochi Eis (2 Stück)", price: "4.20" },
 ];
 
-const cart = [];
-
 const itemContainer = document.getElementById("itemsContainer");
 const cartContainer = document.getElementById("sideBarCartList");
 const sumEntry = document.getElementById("sumEntry");
+const dialog = document.getElementById("messageBox");
 
 function addToCart(item) {
   console.log(item);
@@ -76,7 +79,7 @@ function deleteFromCart(item) {
   const selectedItem = cart.find((i) => i.item.id == item.id);
 
   if (selectedItem.menge === 1) {
-    const index = cart.findIndex(
+    let index = cart.findIndex(
       (entry) => entry.item.id === selectedItem.item.id,
     );
 
@@ -93,10 +96,9 @@ function deleteFromCart(item) {
 function CalculateSumOfAll() {}
 
 function updateCartContainer() {
+  sumValue = 0;
   cartContainer.innerHTML = "";
   console.log("cart erased");
-
-  var sum = 0;
 
   cart.forEach(({ item, menge }) => {
     const positionSum = menge * Number(item.price);
@@ -109,18 +111,75 @@ function updateCartContainer() {
     </div>
 `;
     // <span class="cartPrice">(${item.price} €)</span>
-    sum = sum + positionSum;
+    sumValue = sumValue + positionSum;
   });
 
-  sumEntry.innerText = sum.toFixed(2).replace(".", ",") + " €";
+  sumEntry.innerText = sumValue.toFixed(2).replace(".", ",") + " €";
   console.log("card updated");
+}
+
+function eraseAll() {
+  cart.length = 0;
+  cartContainer.innerHTML = "";
+  sumEntry.innerText = "";
+  sumValue = 0;
+}
+
+function SetMessageInfo(headerText, messageText, canEraseAll = true) {
+  //@Liam: Let wird nach der Klammer aufgeräumt, korrekt?
+  let headerEl = dialog.querySelector("#mbHeader");
+  headerEl.innerText = headerText;
+  let messageEl = dialog.querySelector("#mbMessage");
+  messageEl.innerText = messageText;
+
+  let okBtn = dialog.querySelector(".dialogOkBtn");
+  okBtn.addEventListener(
+    "click",
+    () => {
+      if (canEraseAll) {
+        eraseAll();
+      }
+
+      dialog.close();
+      // okBtn.removeEventListener("click"); Da ich zu faul bin der Funktion einen namen zu geben und es eh hübscher ist: once:true :)
+    },
+    { once: true },
+  );
+}
+
+function eatHere() {
+  SetMessageInfo(
+    "Zum hier essen",
+    `Bestellung abgeschlossen. Gesamtbetrag: ${sumValue.toFixed(2).replace(".", ",")} €. Guten Appetit!`,
+  );
+  dialog.showModal();
+}
+
+function deliverCart() {
+  if (sumValue > 20) {
+    SetMessageInfo(
+      "Lieferung",
+      `Bestellung abgeschlossen. Gesamtbetrag: ${sumValue.toFixed(2).replace(".", ",")} €. DüsDüs!`,
+    );
+    dialog.showModal();
+  } else {
+    SetMessageInfo(
+      "Besellmenge zu gering",
+      `Leider konnte die Bestellung nicht abgeschlossen werden. Die Mindestbestellmenge beträgt ${minimumOrder} €. 
+      Ihr Betrag: ${sumValue.toFixed(2).replace(".", ",")} €. 
+      
+      Kein DüsDüs :( `,
+      false,
+    );
+    dialog.showModal();
+  }
 }
 
 items.forEach((item) => {
   itemContainer.innerHTML += `
     <button class="card" onclick='addToCart(${JSON.stringify(item)})'>
       <h3>${item.title}</h3>
-      <p>${item.price} €</p>
+      <p class="cardPrice">${item.price} €</p>
     </button>
   `;
 });

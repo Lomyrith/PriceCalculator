@@ -17,10 +17,12 @@
           <h1 id="sumEntry"></h1>
         </div>
         <div class="buttonContainer">
-          <button>Zurücksetzen</button>
+          <button class="eraseAllBtn" onclick="eraseAll()">Zurücksetzen</button>
           <div class="innerButtonContainer">
-            <button class="eatHereBtn">VorOrt</button>
-            <button class="deliveryBtn">Lieferung</button>
+            <button class="eatHereBtn" onclick="eatHere()">Vor Ort</button>
+            <button class="deliveryBtn" onclick="deliverCart()">
+              Lieferung
+            </button>
             <!-- "buttton" korrigiert -->
           </div>
         </div>
@@ -30,5 +32,13 @@
         <div id="sideBarCartList"></div>
       </div>
     </div>
+
+    <dialog id="messageBox">
+      <h3 id="mbHeader"></h3>
+      <p id="mbMessage"></p>
+      <div class="dialogButtons">
+        <button class="dialogOkBtn">OK</button>
+      </div>
+    </dialog>
   </body>
 </html>
