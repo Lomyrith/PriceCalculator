@@ -19,6 +19,20 @@ const items = [
   { id: 18, title: "Edamame", price: "4.50" },
   { id: 19, title: "Gyoza (5 Stück)", price: "5.50" },
   { id: 20, title: "Miso Suppe", price: "3.50" },
+  { id: 21, title: "Wakame Salat (Seealgen)", price: "4.80" },
+  { id: 22, title: "Mini Spring Rolls (6 Stück)", price: "4.50" },
+  { id: 23, title: "Yakitori Spieße (3 Stück)", price: "5.80" },
+  { id: 24, title: "Unagi Nigiri (Flussaal)", price: "5.50" },
+  { id: 25, title: "Inari Nigiri (Tofutasche)", price: "3.80" },
+  { id: 26, title: "Oshinko Maki (Rettich)", price: "4.00" },
+  { id: 27, title: "Tamago Maki (Omelett)", price: "4.20" },
+  { id: 28, title: "Rainbow Roll", price: "13.00" },
+  { id: 29, title: "Crunchy Veggie Roll", price: "9.50" },
+  { id: 30, title: "Sashimi Mix (Kleine Platte)", price: "16.50" },
+  { id: 31, title: "Sake Don (Lachs auf Reis)", price: "14.50" },
+  { id: 32, title: "Chicken Teriyaki Bowl", price: "12.50" },
+  { id: 33, title: "Tofu Teriyaki Bowl", price: "11.00" },
+  { id: 34, title: "Mochi Eis (2 Stück)", price: "4.20" },
 ];
 
 const cart = [];
@@ -91,7 +105,7 @@ function updateCartContainer() {
       <span class="cartQty">${menge}x </span>  
       <span class="cartTitle">${item.title} (${item.price} €)</span>
       <span class="positionSum">${positionSum.toFixed(2).replace(".", ",")} €</span>
-      <button class="deleteFromCart" onclick='deleteFromCart(${JSON.stringify(item)})'>X</button>
+      <button class="deleteFromCartBtn" onclick='deleteFromCart(${JSON.stringify(item)})'>X</button>
     </div>
 `;
     // <span class="cartPrice">(${item.price} €)</span>
@@ -106,7 +120,7 @@ items.forEach((item) => {
   itemContainer.innerHTML += `
     <button class="card" onclick='addToCart(${JSON.stringify(item)})'>
       <h3>${item.title}</h3>
-      <p>${item.price}</p>
+      <p>${item.price} €</p>
     </button>
   `;
 });
